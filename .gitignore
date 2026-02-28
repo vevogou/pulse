@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+
+# Environment (SENSITIVE - private keys, API keys)
+.env
+.env.local
+.env.production
+web/.env
+
+# Build
+dist/
+build/
+
+# Hardhat
+contracts/artifacts/
+contracts/cache/
+contracts/typechain-types/
+contracts/*.abi.json
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Deployment (contains deployer address)
+deployment.json
+
+# Logs
+*.log
+npm-debug.log*
