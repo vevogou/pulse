@@ -5,10 +5,10 @@ import { cn } from '@/lib/utils';
 
 const sidebarItems = [
   { icon: LayoutDashboard, label: 'Dashboard', path: '/employer' },
-  { icon: Users, label: 'Workers', path: '/employer' },
-  { icon: Banknote, label: 'Payroll', path: '/employer' },
-  { icon: TrendingUp, label: 'Yield', path: '/employer' },
-  { icon: Settings, label: 'Settings', path: '/employer' },
+  { icon: Users, label: 'Workers', path: '/employer/workers' },
+  { icon: Banknote, label: 'Payroll', path: '/employer/payroll' },
+  { icon: TrendingUp, label: 'Yield', path: '/employer/yield' },
+  { icon: Settings, label: 'Settings', path: '/employer/settings' },
 ];
 
 export function Sidebar() {
@@ -24,7 +24,7 @@ export function Sidebar() {
       {/* Nav items */}
       <nav className="flex-1 space-y-1">
         {sidebarItems.map((item) => {
-          const isActive = location.pathname === item.path;
+          const isActive = location.pathname === item.path || (item.path === '/employer' && location.pathname === '/employer');
           const Icon = item.icon;
 
           return (

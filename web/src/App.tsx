@@ -61,6 +61,7 @@ function AppRoutes() {
 
           {/* Employer */}
           <Route path="/employer" element={<EmployerDashboard />} />
+          <Route path="/employer/:section" element={<EmployerDashboard />} />
 
           {/* Merchant */}
           <Route path="/merchant" element={<MerchantDashboard />} />
