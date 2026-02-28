@@ -17,6 +17,7 @@ const fadeUp = {
 };
 
 const COUNTRIES = [
+  // Africa
   { code: 'NG', name: 'Nigeria', flag: '🇳🇬' },
   { code: 'KE', name: 'Kenya', flag: '🇰🇪' },
   { code: 'GH', name: 'Ghana', flag: '🇬🇭' },
@@ -27,6 +28,44 @@ const COUNTRIES = [
   { code: 'ET', name: 'Ethiopia', flag: '🇪🇹' },
   { code: 'SN', name: 'Senegal', flag: '🇸🇳' },
   { code: 'CI', name: 'Ivory Coast', flag: '🇨🇮' },
+  { code: 'EG', name: 'Egypt', flag: '🇪🇬' },
+  { code: 'MA', name: 'Morocco', flag: '🇲🇦' },
+  { code: 'CM', name: 'Cameroon', flag: '🇨🇲' },
+  // Asia
+  { code: 'IN', name: 'India', flag: '🇮🇳' },
+  { code: 'PH', name: 'Philippines', flag: '🇵🇭' },
+  { code: 'BD', name: 'Bangladesh', flag: '🇧🇩' },
+  { code: 'PK', name: 'Pakistan', flag: '🇵🇰' },
+  { code: 'ID', name: 'Indonesia', flag: '🇮🇩' },
+  { code: 'VN', name: 'Vietnam', flag: '🇻🇳' },
+  { code: 'MY', name: 'Malaysia', flag: '🇲🇾' },
+  { code: 'TH', name: 'Thailand', flag: '🇹🇭' },
+  { code: 'LK', name: 'Sri Lanka', flag: '🇱🇰' },
+  { code: 'NP', name: 'Nepal', flag: '🇳🇵' },
+  // Latin America
+  { code: 'BR', name: 'Brazil', flag: '🇧🇷' },
+  { code: 'MX', name: 'Mexico', flag: '🇲🇽' },
+  { code: 'CO', name: 'Colombia', flag: '🇨🇴' },
+  { code: 'AR', name: 'Argentina', flag: '🇦🇷' },
+  { code: 'VE', name: 'Venezuela', flag: '🇻🇪' },
+  { code: 'PE', name: 'Peru', flag: '🇵🇪' },
+  { code: 'CL', name: 'Chile', flag: '🇨🇱' },
+  // Europe
+  { code: 'UA', name: 'Ukraine', flag: '🇺🇦' },
+  { code: 'PL', name: 'Poland', flag: '🇵🇱' },
+  { code: 'RO', name: 'Romania', flag: '🇷🇴' },
+  { code: 'TR', name: 'Turkey', flag: '🇹🇷' },
+  { code: 'GB', name: 'United Kingdom', flag: '🇬🇧' },
+  { code: 'DE', name: 'Germany', flag: '🇩🇪' },
+  { code: 'FR', name: 'France', flag: '🇫🇷' },
+  { code: 'ES', name: 'Spain', flag: '🇪🇸' },
+  // North America & Oceania
+  { code: 'US', name: 'United States', flag: '🇺🇸' },
+  { code: 'CA', name: 'Canada', flag: '🇨🇦' },
+  { code: 'AU', name: 'Australia', flag: '🇦🇺' },
+  // Middle East
+  { code: 'AE', name: 'UAE', flag: '🇦🇪' },
+  { code: 'SA', name: 'Saudi Arabia', flag: '🇸🇦' },
 ];
 
 export default function OnboardWorker() {
@@ -37,8 +76,9 @@ export default function OnboardWorker() {
 
   const [step, setStep] = useState(0);
   const [displayName, setDisplayName] = useState('');
-  const [country, setCountry] = useState('NG');
+  const [country, setCountry] = useState('');
   const [phone, setPhone] = useState('');
+  const [countrySearch, setCountrySearch] = useState('');
 
   const handleRegister = () => {
     if (!phone) return;
@@ -135,25 +175,36 @@ export default function OnboardWorker() {
 
                 <div>
                   <label className="text-xs text-slate-400 mb-1 block">Country</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    {COUNTRIES.map((c) => (
+                  <input
+                    type="text"
+                    value={countrySearch}
+                    onChange={(e) => setCountrySearch(e.target.value)}
+                    placeholder="Search country..."
+                    className="w-full h-10 px-3 mb-2 bg-slate-700 border border-slate-600 rounded-lg text-sm text-white placeholder:text-slate-500"
+                  />
+                  <div className="max-h-48 overflow-y-auto rounded-lg border border-slate-700">
+                    <div className="grid grid-cols-2 gap-1 p-1">
+                    {COUNTRIES
+                      .filter((c) => c.name.toLowerCase().includes(countrySearch.toLowerCase()) || c.code.toLowerCase().includes(countrySearch.toLowerCase()))
+                      .map((c) => (
                       <button
                         key={c.code}
-                        onClick={() => setCountry(c.code)}
+                        onClick={() => { setCountry(c.code); setCountrySearch(''); }}
                         className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors ${
                           country === c.code
                             ? 'bg-blue-500/20 border border-blue-500/40 text-white'
-                            : 'bg-slate-700 border border-slate-600 text-slate-400 hover:border-slate-500'
+                            : 'bg-slate-700/50 border border-transparent text-slate-400 hover:border-slate-500 hover:text-white'
                         }`}
                       >
                         <span>{c.flag}</span>
-                        <span>{c.name}</span>
+                        <span className="truncate">{c.name}</span>
                       </button>
                     ))}
+                    </div>
                   </div>
                 </div>
 
-                <Button variant="primary" className="w-full" onClick={() => setStep(1)}>
+                <Button variant="primary" className="w-full" onClick={() => country && displayName && setStep(1)} disabled={!country || !displayName}>
                   Continue <ArrowRight size={16} className="ml-2" />
                 </Button>
               </Card>

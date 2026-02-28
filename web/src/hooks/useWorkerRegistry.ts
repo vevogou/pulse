@@ -35,15 +35,15 @@ export function useRegisterWorker() {
 
   const register = (
     phoneHash: `0x${string}`,
-    wallet: `0x${string}`,
+    _wallet: `0x${string}`,
     displayName: string,
     country: string
   ) => {
     writeContract({
       address: WORKER_REGISTRY_ADDRESS,
       abi: WORKER_REGISTRY_ABI,
-      functionName: 'registerWorker',
-      args: [phoneHash, wallet, displayName, country],
+      functionName: 'selfRegister',
+      args: [phoneHash, displayName, country],
     });
   };
 

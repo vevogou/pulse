@@ -65,6 +65,24 @@ contract WorkerRegistry is ERC721, Ownable {
         string calldata displayName,
         string calldata country
     ) external onlyOracle returns (uint256) {
+        return _registerWorker(phoneHash, wallet, displayName, country);
+    }
+
+    /// @notice Self-registration: anyone can register their own wallet
+    function selfRegister(
+        bytes32 phoneHash,
+        string calldata displayName,
+        string calldata country
+    ) external returns (uint256) {
+        return _registerWorker(phoneHash, msg.sender, displayName, country);
+    }
+
+    function _registerWorker(
+        bytes32 phoneHash,
+        address wallet,
+        string memory displayName,
+        string memory country
+    ) internal returns (uint256) {
         require(!workers[wallet].exists, "Already registered");
         require(phoneToWallet[phoneHash] == address(0), "Phone already used");
 

@@ -1998,6 +1998,35 @@ export const WORKER_REGISTRY_ABI = [
   {
     "inputs": [
       {
+        "internalType": "bytes32",
+        "name": "phoneHash",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "string",
+        "name": "displayName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "country",
+        "type": "string"
+      }
+    ],
+    "name": "selfRegister",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "operator",
         "type": "address"
