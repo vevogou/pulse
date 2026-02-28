@@ -20,6 +20,7 @@ const StreamDetail = lazy(() => import('@/pages/StreamDetail'));
 const Profile = lazy(() => import('@/pages/Profile'));
 const OnboardWorker = lazy(() => import('@/pages/OnboardWorker'));
 const OnboardEmployer = lazy(() => import('@/pages/OnboardEmployer'));
+const Login = lazy(() => import('@/pages/Login'));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,8 +42,19 @@ function PageLoader() {
   );
 }
 
+/** Route guard — redirects to landing if not authenticated with the required role */
+function ProtectedRoute({ children, allowedRoles }: { children: React.ReactNode; allowedRoles: string[] }) {
+  const { role, isConnected, isLoading } = useAuth();
+
+  if (isLoading) return <PageLoader />;
+  if (!isConnected) return <Navigate to="/login" replace />;
+  if (!role || !allowedRoles.includes(role)) return <Navigate to="/login" replace />;
+
+  return <>{children}</>;
+}
+
 function AppRoutes() {
-  const { role } = useAuth();
+  const { role, isConnected } = useAuth();
 
   return (
     <AnimatePresence mode="wait">
@@ -50,21 +62,22 @@ function AppRoutes() {
         <Routes>
           {/* Public */}
           <Route path="/" element={<Landing />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/onboard/worker" element={<OnboardWorker />} />
           <Route path="/onboard/employer" element={<OnboardEmployer />} />
 
           {/* Worker */}
-          <Route path="/worker" element={<WorkerHome />} />
-          <Route path="/withdraw" element={<WithdrawPage />} />
-          <Route path="/stream/:id" element={<StreamDetail />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/worker" element={<ProtectedRoute allowedRoles={['worker']}><WorkerHome /></ProtectedRoute>} />
+          <Route path="/withdraw" element={<ProtectedRoute allowedRoles={['worker']}><WithdrawPage /></ProtectedRoute>} />
+          <Route path="/stream/:id" element={<ProtectedRoute allowedRoles={['worker']}><StreamDetail /></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute allowedRoles={['worker']}><Profile /></ProtectedRoute>} />
 
           {/* Employer */}
-          <Route path="/employer" element={<EmployerDashboard />} />
-          <Route path="/employer/:section" element={<EmployerDashboard />} />
+          <Route path="/employer" element={<ProtectedRoute allowedRoles={['employer']}><EmployerDashboard /></ProtectedRoute>} />
+          <Route path="/employer/:section" element={<ProtectedRoute allowedRoles={['employer']}><EmployerDashboard /></ProtectedRoute>} />
 
           {/* Merchant */}
-          <Route path="/merchant" element={<MerchantDashboard />} />
+          <Route path="/merchant" element={<ProtectedRoute allowedRoles={['merchant']}><MerchantDashboard /></ProtectedRoute>} />
 
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />

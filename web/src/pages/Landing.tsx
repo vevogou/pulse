@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   Calendar,
@@ -17,6 +17,7 @@ import { Navbar } from '@/components/layout/Navbar';
 import { HeartbeatLine } from '@/components/ui/HeartbeatLine';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
+import { useAuth } from '@/context/AuthContext';
 
 const stagger = {
   animate: { transition: { staggerChildren: 0.08 } },
@@ -244,6 +245,39 @@ function Footer() {
 }
 
 export default function Landing() {
+  const { role, isConnected } = useAuth();
+  const navigate = useNavigate();
+
+  // If user is already logged in with a role, show "Go to Dashboard" instead of onboarding buttons
+  const heroButtons = isConnected && role ? (
+    <motion.div variants={fadeUp} className="flex flex-wrap gap-4 mt-8">
+      <Button
+        variant="primary"
+        size="lg"
+        onClick={() => {
+          if (role === 'worker') navigate('/worker');
+          else if (role === 'employer') navigate('/employer');
+          else if (role === 'merchant') navigate('/merchant');
+        }}
+      >
+        Go to Dashboard <ArrowRight size={16} className="ml-2" />
+      </Button>
+    </motion.div>
+  ) : (
+    <motion.div variants={fadeUp} className="flex flex-wrap gap-4 mt-8">
+      <Link to="/onboard/worker">
+        <Button variant="primary" size="lg">
+          I'm a Worker
+        </Button>
+      </Link>
+      <Link to="/onboard/employer">
+        <Button variant="secondary" size="lg">
+          I'm an Employer
+        </Button>
+      </Link>
+    </motion.div>
+  );
+
   return (
     <motion.div
       initial="initial"
@@ -292,18 +326,7 @@ export default function Landing() {
                 amount, any time.
               </motion.p>
 
-              <motion.div variants={fadeUp} className="flex flex-wrap gap-4 mt-8">
-                <Link to="/onboard/worker">
-                  <Button variant="primary" size="lg">
-                    I'm a Worker
-                  </Button>
-                </Link>
-                <Link to="/onboard/employer">
-                  <Button variant="secondary" size="lg">
-                    I'm an Employer
-                  </Button>
-                </Link>
-              </motion.div>
+              {heroButtons}
             </motion.div>
 
             {/* Right — Phone mockup */}

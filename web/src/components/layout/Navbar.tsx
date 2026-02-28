@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { WalletButton } from '@/components/ui/WalletButton';
+import { useAuth } from '@/context/AuthContext';
 import { cn } from '@/lib/utils';
 
 const navLinks = [
@@ -12,6 +13,8 @@ const navLinks = [
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { role, isConnected } = useAuth();
   const isLanding = location.pathname === '/';
 
   useEffect(() => {
@@ -19,6 +22,13 @@ export function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleDashboard = () => {
+    if (role === 'worker') navigate('/worker');
+    else if (role === 'employer') navigate('/employer');
+    else if (role === 'merchant') navigate('/merchant');
+    else navigate('/login');
+  };
 
   return (
     <motion.nav
@@ -54,12 +64,12 @@ export function Navbar() {
           {/* Wallet */}
           <div className="flex items-center gap-4">
             {isLanding && (
-              <Link
-                to="/worker"
+              <button
+                onClick={handleDashboard}
                 className="hidden sm:block text-sm text-slate-400 hover:text-white transition-colors"
               >
-                Log In
-              </Link>
+                {isConnected && role ? 'Dashboard' : 'Log In'}
+              </button>
             )}
             <WalletButton />
           </div>

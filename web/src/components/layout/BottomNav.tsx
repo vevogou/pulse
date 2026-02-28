@@ -5,10 +5,10 @@ import { cn } from '@/lib/utils';
 
 const tabs = [
   { icon: Home, label: 'Home', path: '/worker' },
-  { icon: ArrowUpRight, label: 'Send', path: '/worker/withdraw' },
-  { icon: MapPin, label: 'Agents', path: '/worker/withdraw' },
+  { icon: ArrowUpRight, label: 'Send', path: '/withdraw' },
+  { icon: MapPin, label: 'Agents', path: '/withdraw' },
   { icon: Clock, label: 'History', path: '/worker' },
-  { icon: User, label: 'Profile', path: '/worker/profile' },
+  { icon: User, label: 'Profile', path: '/profile' },
 ];
 
 export function BottomNav() {

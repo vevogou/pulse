@@ -48,6 +48,11 @@ export default function OnboardEmployer() {
     deposit(amt);
   };
 
+  const handleSkipToFundLater = () => {
+    setRole('employer');
+    navigate('/employer');
+  };
+
   React.useEffect(() => {
     if (depositSuccess) {
       setRole('employer');
@@ -82,7 +87,11 @@ export default function OnboardEmployer() {
               <Check size={32} className="text-emerald-400" />
             </motion.div>
             <h2 className="text-xl font-display font-bold text-white mb-2">Vault Funded!</h2>
-            <p className="text-sm text-slate-400">Your payroll vault is ready. Redirecting to dashboard...</p>
+            <p className="text-sm text-slate-400 mb-2">Your payroll vault is ready.</p>
+            <p className="text-xs text-emerald-400 mb-6">Earning yield on Aave V3</p>
+            <Button variant="primary" className="w-full" onClick={() => navigate('/employer')}>
+              Go to Dashboard <ArrowRight size={16} className="ml-2" />
+            </Button>
           </Card>
         </motion.div>
       </div>
@@ -170,6 +179,13 @@ export default function OnboardEmployer() {
                 >
                   Continue <ArrowRight size={16} className="ml-2" />
                 </Button>
+
+                <button
+                  onClick={handleSkipToFundLater}
+                  className="w-full text-center text-sm text-slate-400 hover:text-white transition-colors py-2"
+                >
+                  Skip — I'll fund later →
+                </button>
               </Card>
             </motion.div>
           )}

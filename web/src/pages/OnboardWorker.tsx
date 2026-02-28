@@ -120,7 +120,11 @@ export default function OnboardWorker() {
               <Shield size={32} className="text-emerald-400" />
             </motion.div>
             <h2 className="text-xl font-display font-bold text-white mb-2">Welcome to PULSE!</h2>
-            <p className="text-sm text-slate-400">Your worker registration is complete. Redirecting...</p>
+            <p className="text-sm text-slate-400 mb-2">Your worker registration is complete.</p>
+            <p className="text-xs text-emerald-400 mb-6">Soulbound NFT minted to your wallet</p>
+            <Button variant="primary" className="w-full" onClick={() => navigate('/worker')}>
+              Go to Dashboard <ArrowRight size={16} className="ml-2" />
+            </Button>
           </Card>
         </motion.div>
       </div>

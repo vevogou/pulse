@@ -26,9 +26,9 @@ const stagger = {
 };
 
 const actionButtons = [
-  { icon: ArrowUpRight, label: 'Send Money', color: 'text-blue-400', path: '/worker/withdraw' },
+  { icon: ArrowUpRight, label: 'Send Money', color: 'text-blue-400', path: '/withdraw' },
   { icon: ArrowDownLeft, label: 'Cash In', color: 'text-emerald-400', path: '/worker' },
-  { icon: Banknote, label: 'Cash Out', color: 'text-amber-400', path: '/worker/withdraw' },
+  { icon: Banknote, label: 'Cash Out', color: 'text-amber-400', path: '/withdraw' },
   { icon: TrendingUp, label: 'Save & Earn', color: 'text-blue-300', path: '/worker' },
 ];
 
@@ -52,7 +52,7 @@ function StreamItem({ streamId }: { streamId: bigint }) {
   const { stream } = useStreamData(streamId);
   if (!stream) return <Skeleton className="h-24 w-full" />;
   return (
-    <Link to={`/worker/stream/${streamId.toString()}`}>
+    <Link to={`/stream/${streamId.toString()}`}>
       <StreamCard stream={stream} />
     </Link>
   );

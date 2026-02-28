@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Shield, Star, Award, Copy, ExternalLink, LogOut, Check } from 'lucide-react';
 import { useAccount, useDisconnect } from 'wagmi';
+import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
@@ -73,6 +74,7 @@ function TierCard({ tier, current }: { tier: typeof TIERS[0]; current: boolean }
 export default function Profile() {
   const { address, isConnected } = useAccount();
   const { disconnect } = useDisconnect();
+  const navigate = useNavigate();
   const { role, setRole } = useAuth();
   const { score: scoreResult } = useScore(address);
   const { data: workerInfo } = useWorkerInfo(address);
@@ -193,7 +195,11 @@ export default function Profile() {
               </div>
             </Card>
 
-            <Button variant="danger" className="w-full" onClick={() => disconnect()}>
+            <Button variant="danger" className="w-full" onClick={() => {
+              setRole(null);
+              disconnect();
+              navigate('/');
+            }}>
               <LogOut size={16} className="mr-2" /> Disconnect Wallet
             </Button>
           </motion.div>
