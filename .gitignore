@@ -28,6 +28,9 @@ Thumbs.db
 # Deployment (contains deployer address)
 deployment.json
 
+# Docs (local only)
+about.md
+
 # Logs
 *.log
 npm-debug.log*
