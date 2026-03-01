@@ -5,7 +5,6 @@ import { ArrowUpRight, ArrowDownLeft, Banknote, TrendingUp, Bell, Copy, Store } 
 import { useAccount } from 'wagmi';
 import { LiveBalanceCard } from '@/components/ui/LiveBalanceCard';
 import { StreamCard } from '@/components/ui/StreamCard';
-import { MerchantCard } from '@/components/ui/MerchantCard';
 import { Card } from '@/components/ui/Card';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { BottomNav } from '@/components/layout/BottomNav';
@@ -160,27 +159,11 @@ export default function WorkerHome() {
       {/* Nearby Merchants */}
       <motion.div variants={fadeUp} className="px-4 mb-6">
         <h2 className="text-sm font-semibold text-slate-300 mb-3">Nearby Merchants</h2>
-        <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4">
-          {/* Placeholder merchants when no data */}
-          <MerchantCard
-            name="QuickCash Store"
-            cashAvailable={340000000n}
-            distance="0.3 km"
-            isVerified={true}
-          />
-          <MerchantCard
-            name="Mobile Money Plus"
-            cashAvailable={150000000n}
-            distance="0.8 km"
-            isVerified={true}
-          />
-          <MerchantCard
-            name="City Exchange"
-            cashAvailable={500000000n}
-            distance="1.2 km"
-            isVerified={true}
-          />
-        </div>
+        <Card className="text-center py-8">
+          <Store size={24} className="mx-auto text-slate-500 mb-2" />
+          <p className="text-slate-400 text-sm">No merchants nearby yet</p>
+          <p className="text-slate-500 text-xs mt-1">Merchants will appear here once registered</p>
+        </Card>
       </motion.div>
 
       <BottomNav />

@@ -44,9 +44,9 @@ function PolygonBadge() {
 
 function StatsBar() {
   const stats = [
-    { label: 'Streamed Today', value: '$4.2M', color: 'text-emerald-400' },
-    { label: 'Active Workers', value: '12,847', color: 'text-blue-400' },
-    { label: 'Per Withdrawal', value: '$0.003', color: 'text-amber-400' },
+    { label: 'Network', value: 'Polygon', color: 'text-emerald-400' },
+    { label: 'Contracts Deployed', value: '5', color: 'text-blue-400' },
+    { label: 'Avg Gas Cost', value: '<$0.01', color: 'text-amber-400' },
   ];
 
   return (
@@ -353,7 +353,7 @@ export default function Landing() {
                       <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">
                         Your balance
                       </p>
-                      <p className="text-4xl font-display font-bold text-white">$12.49</p>
+                      <p className="text-4xl font-display font-bold text-white">$—.——</p>
                       <div className="flex items-center gap-2 mt-2">
                         <span className="relative flex h-2 w-2">
                           <span className="animate-ping absolute h-full w-full rounded-full bg-emerald-400 opacity-75" />

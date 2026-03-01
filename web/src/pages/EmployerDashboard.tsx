@@ -23,8 +23,8 @@ const fadeUp = {
   animate: { opacity: 1, y: 0 },
 };
 
-// Mini sparkline data
-const sparkData = Array.from({ length: 20 }, (_, i) => ({ v: Math.random() * 100 + 50 }));
+// Sparkline data (static shape – actual values from on-chain)
+const sparkData = Array.from({ length: 20 }, (_, i) => ({ v: 50 + Math.sin(i * 0.5) * 20 }));
 
 function StatCard({ label, value, color, sparkColor }: { label: string; value: string; color: string; sparkColor: string }) {
   return (

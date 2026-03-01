@@ -23,11 +23,7 @@ const methods = [
   { id: 'send', icon: Send, label: 'Send to PULSE User', desc: 'Transfer to another wallet', comingSoon: false },
 ];
 
-const mockAgents = [
-  { id: 1, name: 'QuickCash Store', distance: '0.3 km', cash: '$340', hours: '8am-8pm' },
-  { id: 2, name: 'Mobile Money Plus', distance: '0.8 km', cash: '$150', hours: '9am-6pm' },
-  { id: 3, name: 'City Exchange', distance: '1.2 km', cash: '$500', hours: '24/7' },
-];
+
 
 function NumPad({ value, onChange }: { value: string; onChange: (v: string) => void }) {
   const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', 'del'];
@@ -91,7 +87,7 @@ export default function WithdrawPage() {
             <motion.div key="method" {...fadeUp} className="space-y-3">
               <Card className="p-4">
                 <p className="text-xs uppercase tracking-wider text-slate-400 mb-1">Available Balance</p>
-                <p className="text-2xl font-display font-bold text-white">$47.83</p>
+                <p className="text-2xl font-display font-bold text-white">Connect wallet to view</p>
               </Card>
 
               <h2 className="text-sm font-semibold text-slate-300 mt-6 mb-3">Withdrawal Method</h2>
@@ -129,28 +125,10 @@ export default function WithdrawPage() {
               </Card>
 
               <h2 className="text-sm font-semibold text-slate-300 mt-4 mb-3">Nearby Agents</h2>
-              {mockAgents.map((agent) => (
-                <Card
-                  key={agent.id}
-                  className={`p-4 cursor-pointer ${selectedAgent === agent.id ? 'border-blue-500' : ''}`}
-                  hover
-                  onClick={() => {
-                    setSelectedAgent(agent.id);
-                    setStep('amount');
-                  }}
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="text-sm font-semibold text-white">{agent.name}</h3>
-                      <div className="flex items-center gap-3 mt-1">
-                        <span className="text-xs text-slate-400">{agent.distance}</span>
-                        <span className="text-xs text-slate-400">{agent.hours}</span>
-                      </div>
-                    </div>
-                    <Badge variant="success">Cash: {agent.cash}</Badge>
-                  </div>
-                </Card>
-              ))}
+              <Card className="text-center py-8">
+                <p className="text-slate-400 text-sm">No agents found nearby</p>
+                <p className="text-slate-500 text-xs mt-1">Agents will appear once registered on-chain</p>
+              </Card>
             </motion.div>
           )}
 
@@ -206,7 +184,7 @@ export default function WithdrawPage() {
                       Your Cashout Code
                     </p>
                     <div className="flex justify-center gap-2 mb-4">
-                      {'A7F3B2'.split('').map((char, i) => (
+                      {'------'.split('').map((char, i) => (
                         <div
                           key={i}
                           className="w-10 h-12 bg-slate-700 border border-slate-600 rounded-lg flex items-center justify-center"
@@ -217,7 +195,7 @@ export default function WithdrawPage() {
                     </div>
                     <div className="flex items-center justify-center gap-2 text-amber-400">
                       <Clock size={14} />
-                      <span className="text-sm font-mono">14:32 remaining</span>
+                      <span className="text-sm font-mono">Code generated on-chain</span>
                     </div>
                   </Card>
                   <p className="text-sm text-slate-400">

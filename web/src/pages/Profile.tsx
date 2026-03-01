@@ -91,7 +91,7 @@ export default function Profile() {
     }
   };
 
-  const referralLink = address ? `https://pulse.africa/r/${address.slice(0, 8)}` : '';
+  const referralLink = address ? `https://polygonscan.com/address/${address}` : '';
 
   if (!isConnected) {
     return (
@@ -169,7 +169,7 @@ export default function Profile() {
                   Copy
                 </Button>
               </div>
-              <p className="text-xs text-slate-500 mt-2">Share with workers to grow the network</p>
+              <p className="text-xs text-slate-500 mt-2">Share your wallet address to receive streams</p>
             </Card>
           </motion.div>
 
